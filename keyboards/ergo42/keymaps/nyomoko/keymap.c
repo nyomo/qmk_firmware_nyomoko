@@ -36,22 +36,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* META
  * ,------------------------------------------------.   ,------------------------------------------------.
- * |   1  |   2  |   3  |   4  |   5  |   6  |  [   |   |  ]   |   7  |   8  |   9  |   0  |   -  |  ^   |
+ * |      |      |   !  |   "  |   #  |   $  |  %   |   |  &   |   '  |   (  |   )  |   ^  |      | Del  |
  * |------+------+------+------+------+------+------|   |-------------+------+------+------+------+------|
- * | Alt  |  F1  |      |Muhen | Henk |      |  (   |   |  )   | Left | Down |  Up  |Right |      |      |
+ * |      |      |      |      |      |      |      |   | Left | Down |  Up  |Right |      |      |      |
  * |------+------+------+------+------+------+------|   |------|------+------+------+------+------+------|
- * | Sft  |  F2  |  F3  |  F4  |  F5  |  F6  |  {   |   |  }   |  F7  |  F8  |  F9  | F10  | F11  |\/Sft |
+ * | META |      |      |      |      |      |      |   |      |      |  [   |   ]  |  {   |  }   | F12  |
  * |------+------+------+------+------+------+------|   |------+------+------+------+------+------+------|
- * | Ctrl | GUI  |  App |PrtSc |ESC/  |Space/|Tab/  |   |Back  |Enter/| Del  |Reset |=>GAME|=>SYMB|  \   |
- * |      |      |      |      |~SYMB |RCtrl |Shift |   |Space |~META |      |      |      |      |      |
+ * | Sft  |  F2  |  F3  |  F4  |  F5  |  F6  |  {   |   |  F5  |  F6  |  F7  |  F8  |  F9  | F10  | F11  |
  * `------------------------------------------------'   `------------------------------------------------'
  */
 
 [META] = KEYMAP( \
-  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    _______, _______, KC_7,    KC_8,    KC_9,  KC_0,    KC_MINS, KC_EQL, \
-  _______, KC_F1,   XXXXXXX, KC_MHEN, KC_HENK, XXXXXXX, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, XXXXXXX, XXXXXXX, \
-  _______, KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   _______, _______, KC_F7,   KC_F8,   KC_F9, KC_F10,  KC_F11,  SFT_T(KC_RO), \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RESET, _______, _______, _______ \
+  _______, _______, S(KC_1), S(KC_2), S(KC_3), S(KC_4), S(KC_5), S(KC_6),S(KC_7), S(KC_8), S(KC_9),    S(KC_0),   S(KC_MINS), S(KC_EQL), \
+  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, XXXXXXX, XXXXXXX,_______, \
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_A, KC_RBRC, KC_BSLS,S(KC_RBRC),S(KC_BSLS),KC_F12, \
+  KC_F1  , KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______, _______, _______, KC_F6,   KC_F7,   KC_F8, KC_F9,  KC_F10,  KC_F11 \
 ),
 
 /* SYMB
