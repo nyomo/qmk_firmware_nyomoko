@@ -330,6 +330,18 @@ void rgblight_decrease_val(void) {
   rgblight_sethsv(rgblight_config.hue, rgblight_config.sat, val);
 }
 
+void rgblight_increase_speed(void) {
+    //rgblight_config.speed = increment( rgblight_config.speed, 1, 0, 3 );
+    eeconfig_update_rgblight(rgblight_config.raw);//EECONFIG needs to be increased to support this
+}
+
+void rgblight_decrease_speed(void) {
+    //rgblight_config.speed = decrement( rgblight_config.speed, 1, 0, 3 );
+    eeconfig_update_rgblight(rgblight_config.raw);//EECONFIG needs to be increased to support this
+}
+
+
+
 void rgblight_sethsv_noeeprom(uint16_t hue, uint8_t sat, uint8_t val) {
   inmem_config.raw = rgblight_config.raw;
   if (rgblight_config.enable) {
