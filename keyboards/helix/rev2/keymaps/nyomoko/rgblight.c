@@ -33,9 +33,9 @@
 __attribute__ ((weak))
 const uint8_t RGBLED_BREATHING_INTERVALS[] PROGMEM = {30, 20, 10, 5};
 __attribute__ ((weak))
-const uint8_t RGBLED_RAINBOW_MOOD_INTERVALS[] PROGMEM = {120, 60, 30};
+const uint8_t RGBLED_RAINBOW_MOOD_INTERVALS[] PROGMEM = {60, 30, 10};
 __attribute__ ((weak))
-const uint8_t RGBLED_RAINBOW_SWIRL_INTERVALS[] PROGMEM = {100, 50, 20};
+const uint8_t RGBLED_RAINBOW_SWIRL_INTERVALS[] PROGMEM = {50, 10, 5};
 __attribute__ ((weak))
 const uint8_t RGBLED_SNAKE_INTERVALS[] PROGMEM = {100, 50, 20};
 __attribute__ ((weak))
