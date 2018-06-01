@@ -2,7 +2,6 @@
 #include "bootloader.h"
 #include "action_layer.h"
 #include "eeconfig.h"
-#include "jiskey.h"
 #ifdef PROTOCOL_LUFA
 #include "lufa.h"
 #include "split_util.h"
@@ -126,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, RESET,   RGBRST,  _______, _______, _______,                   _______, _______, _______, _______,_______ , KC_DEL, \
       _______, AG_SWAP, _______, AU_ON,   AU_OFF,  AG_NORM,                   KC_LEFT, KC_DOWN, KC_UP,KC_RIGHT,  _______, _______, \
       _______, _______, _______, _______, _______, _______, _______, RGB_M_R, _______, _______, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, \
-      _______, RGB_M_P, RGB_M_B,RGB_M_X, RGB_M_SW, RGB_M_SN, RGB_M_K, RGB_M_SW,RGB_M_G, _______, RGB_SMOD,RGB_HUD, RGB_SAD, RGB_VAD \
+      _______, RGB_M_P, RGB_M_B,RGB_M_X, RGB_M_SW, RGB_M_R,RGB_M_SN, RGB_M_K, RGB_M_SW,RGB_M_G, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD \
       )
 };
 
