@@ -10,6 +10,7 @@
 #ifdef SSD1306OLED
   #include "ssd1306.h"
 #endif
+#include "keymap_extras/keymap_jp.h"
 
 extern keymap_config_t keymap_config;
 
