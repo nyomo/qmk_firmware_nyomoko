@@ -40,6 +40,8 @@ MCUFLAGS = -mmcu=$(MCU)
 #     For a directory that has spaces, enclose it in quotes.
 EXTRALIBDIRS =
 
+MODECMD='/mnt/c/Windows/System32/mode.com'
+WINAVRDIR="/mnt/c/tools/arduino/hardware/tools/avr/"
 
 #---------------- External Memory Options ----------------
 
@@ -169,10 +171,20 @@ dfu-ee: $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).eep
 	fi
 	$(DFU_PROGRAMMER) $(MCU) reset
 
-define EXEC_AVRDUDE
-	USB= ;\
+#		COMPORT1=`$(MODECMD)|grep -o 'COM[0-9]*'` ;\
+
+avrdude: $(BUILD_DIR)/$(TARGET).hex check-size cpfirmware
 	if $(GREP) -q -s Microsoft /proc/version; then \
-		echo 'ERROR: AVR flashing cannot be automated within the Windows Subsystem for Linux (WSL) currently. Instead, take the .hex file generated and flash it using AVRDUDE, AVRDUDESS, or XLoader.'; \
+		printf "Detecting USB port, reset your controller now."; \
+		COMPORT1=`$(MODECMD)|grep -o 'COM[0-9]*'` ;\
+		AVRPATH=`echo $(WINAVRDIR)|perl -pne 's#/mnt/c/#C:/#'|perl -pne 's#\E/#\\\#g'`; \
+		while [ -z $$COMPORT2 ]; do \
+			sleep 0.5; \
+			printf "."; \
+			COMPORT2=`$(MODECMD)|$(GREP) -v $COMPORT1|$(GREP) -o 'COM[0-9]*'`;\
+		done; \
+		printf $$COMPORT2;\
+		$(WINAVRDIR)/bin/avrdude.exe -C $$AVRPATH\etc\\avrdude.conf -p $(MCU) -c avr109 -P $$COMPORT2 -U flash:w:$(BUILD_DIR)/$(TARGET).hex; \
 	else \
 		printf "Detecting USB port, reset your controller now."; \
 		ls /dev/tty* > /tmp/1; \
@@ -192,15 +204,6 @@ define EXEC_AVRDUDE
 		sleep 1; \
 		avrdude -p $(MCU) -c avr109 -P $$USB -U flash:w:$(BUILD_DIR)/$(TARGET).hex; \
 	fi
-endef
-
-avrdude: $(BUILD_DIR)/$(TARGET).hex check-size cpfirmware
-	$(call EXEC_AVRDUDE)
-
-avrdude-loop: $(BUILD_DIR)/$(TARGET).hex check-size cpfirmware
-	while true; do \
-	    $(call EXEC_AVRDUDE) ; \
-	done
 
 # Convert hex to bin.
 bin: $(BUILD_DIR)/$(TARGET).hex
@@ -263,12 +266,12 @@ extcoff: $(BUILD_DIR)/$(TARGET).elf
 bootloader:
 	make -C lib/lufa/Bootloaders/DFU/ clean
 	printf "#ifndef QMK_KEYBOARD\n#define QMK_KEYBOARD\n\n" > lib/lufa/Bootloaders/DFU/Keyboard.h
-	printf "%s\n" "`$(GREP) "MANUFACTURER\s" $(ALL_CONFIGS) -h | tail -1`" >> lib/lufa/Bootloaders/DFU/Keyboard.h
-	printf "%s Bootloader\n" "`$(GREP) "PRODUCT\s" $(ALL_CONFIGS) -h | tail -1 | tr -d '\r'`" >> lib/lufa/Bootloaders/DFU/Keyboard.h
-	printf "%s\n" "`$(GREP) "QMK_ESC_OUTPUT\s" $(ALL_CONFIGS) -h | tail -1`" >> lib/lufa/Bootloaders/DFU/Keyboard.h
-	printf "%s\n" "`$(GREP) "QMK_ESC_INPUT\s" $(ALL_CONFIGS) -h | tail -1`" >> lib/lufa/Bootloaders/DFU/Keyboard.h
-	printf "%s\n" "`$(GREP) "QMK_LED\s" $(ALL_CONFIGS) -h | tail -1`" >> lib/lufa/Bootloaders/DFU/Keyboard.h
-	printf "%s\n" "`$(GREP) "QMK_SPEAKER\s" $(ALL_CONFIGS) -h | tail -1`" >> lib/lufa/Bootloaders/DFU/Keyboard.h
+	printf "%s\n" "`$(GREP) "MANUFACTURER" $(ALL_CONFIGS) -h | tail -1`" >> lib/lufa/Bootloaders/DFU/Keyboard.h
+	printf "%s Bootloader\n" "`$(GREP) "PRODUCT" $(ALL_CONFIGS) -h | tail -1`" >> lib/lufa/Bootloaders/DFU/Keyboard.h
+	printf "%s\n" "`$(GREP) "QMK_ESC_OUTPUT" $(ALL_CONFIGS) -h | tail -1`" >> lib/lufa/Bootloaders/DFU/Keyboard.h
+	printf "%s\n" "`$(GREP) "QMK_ESC_INPUT" $(ALL_CONFIGS) -h | tail -1`" >> lib/lufa/Bootloaders/DFU/Keyboard.h
+	printf "%s\n" "`$(GREP) "QMK_LED" $(ALL_CONFIGS) -h | tail -1`" >> lib/lufa/Bootloaders/DFU/Keyboard.h
+	printf "%s\n" "`$(GREP) "QMK_SPEAKER" $(ALL_CONFIGS) -h | tail -1`" >> lib/lufa/Bootloaders/DFU/Keyboard.h
 	printf "\n#endif" >> lib/lufa/Bootloaders/DFU/Keyboard.h
 	make -C lib/lufa/Bootloaders/DFU/
 	printf "BootloaderDFU.hex copied to $(TARGET)_bootloader.hex\n"
