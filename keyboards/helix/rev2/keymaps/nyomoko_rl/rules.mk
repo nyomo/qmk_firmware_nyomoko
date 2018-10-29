@@ -84,7 +84,7 @@ endif
 OPT_DEFS += -DHELIX_ROWS=$(strip $(HELIX_ROWS))
 
 ifeq ($(strip $(LED_BACK_ENABLE)), yes)
-  RGBLIGHT_ENABLE = yes-but-local
+  RGBLIGHT_ENABLE = yes
   OPT_DEFS += -DRGBLED_BACK
   ifeq ($(strip $(LED_UNDERGLOW_ENABLE)), yes)
     $(eval $(call HELIX_CUSTOMISE_MSG))
@@ -117,7 +117,7 @@ ifeq ($(strip $(Link_Time_Optimization)),yes)
 endif
 
 #SRC += led_test_init.c
-SRC += rgblight.c
+#SRC += rgblight.c
 
 # Do not enable SLEEP_LED_ENABLE. it uses the same timer as BACKLIGHT_ENABLE
 SLEEP_LED_ENABLE = no    # Breathing sleep LED during USB suspend
