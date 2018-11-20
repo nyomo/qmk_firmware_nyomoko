@@ -73,8 +73,8 @@ endif
 
 # Uncomment these for checking
 #   jp: コンパイル時にカスタマイズの状態を表示したい時はコメントをはずします。
-# $(eval $(call HELIX_CUSTOMISE_MSG))
-# $(info )
+$(eval $(call HELIX_CUSTOMISE_MSG))
+$(info )
 
 ifneq ($(strip $(HELIX_ROWS)), 4)
   ifneq ($(strip $(HELIX_ROWS)), 5)
@@ -120,13 +120,13 @@ endif
 #SRC += rgblight.c
 
 # Do not enable SLEEP_LED_ENABLE. it uses the same timer as BACKLIGHT_ENABLE
-SLEEP_LED_ENABLE = no    # Breathing sleep LED during USB suspend
+SLEEP_LED_ENABLE = yes    # Breathing sleep LED during USB suspend
 
 ifndef QUANTUM_DIR
 	include ../../../../Makefile
 endif
 
 # Uncomment these for debugging
-# $(info -- RGBLIGHT_ENABLE=$(RGBLIGHT_ENABLE))
+$(info -- RGBLIGHT_ENABLE=$(RGBLIGHT_ENABLE))
 # $(info -- OPT_DEFS=$(OPT_DEFS))
 # $(info )
